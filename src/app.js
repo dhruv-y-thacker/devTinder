@@ -32,7 +32,28 @@ app.use('/admin/getAllData', (req,res)=>{
 
 
 app.use('/user/getData',(req,res)=> {
-    res.send ("after middleware came here");
+    // res.send ("after middleware came here");
+    //or below handled by the app.usemethod
+    // throw new Error ("some unwanted errrr whcih is not in try catch block... always beeter to write in try catch but if you miss then it will go in that 4th argument err")
+    try{
+        throw new Error ('good way use try catch first')
+    } catch(err){
+        console.log(err)
+        res.status(500).send("bro bro handled by try catch good way than global catch using that --app.use('/', (err, req, res, next)=>{}--")
+    }
+})
+
+// if you are using this then it will match only if error arrises and not every time
+// This is an Express error-handling middleware.
+// It only executes when next(err) is called or an error is thrown.
+// It does NOT run for every incoming request automatically.
+// order of pasing this is madatory this 
+// should be wriiten at the end of the code only
+app.use('/', (err, req, res, next)=>{
+    if(err){
+        console.log(err);
+        res.status(500).send("something went wrong")
+    }
 })
 
 app.listen(3000);
