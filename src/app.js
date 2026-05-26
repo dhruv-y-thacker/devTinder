@@ -6,6 +6,27 @@ app = express();
 
 app.use(express.json());
 
+app.get('/user', async (req,res)=>{
+    const userEmail = req.body.emailId;
+    try{
+        const users = await User.find({emailId : userEmail}) //gives the array of users of that emailId
+        if(users.length<1){
+            res.status(404).send("user not found !!!")
+        } else{
+            res.send(users)
+        }
+    } catch(err){
+        res.status(400).send("Error saving the user "+ err.message)
+    }
+})
+
+app.get('/feed', async(req,res)=>{
+
+    try(
+
+    ) catch
+})
+
 app.post('/signUp',async (req,res)=>{
     console.log(req.body);
 
